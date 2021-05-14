@@ -4,6 +4,7 @@
 
 @section('content')
     <h1>Vestiti</h1>
+    <button><a href="{{route("dresses.create")}}">crea nuovo prodotto</a></button>
     <div style="display: flex; justify-content: space-between">
         @foreach ($dresses as $dress)
             <div style="text-align: center">

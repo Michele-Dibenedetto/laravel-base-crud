@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Dress;
+use Illuminate\Auth\Events\Validated;
 
 class DressController extends Controller
 {
@@ -44,6 +45,17 @@ class DressController extends Controller
     {
         
         $data = $request->all();
+
+        $request->validate([
+            "taglia" => "required|max:10",
+            "tipo" => "required|max:20",
+            "colore" => "required|max:30",
+            "sesso" => "required|max:10",
+            "costo" => "required|numeric",
+            "marca" => "required|max:50",
+            "immagine" => "required",
+        ]);
+
         $newDress = new Dress;
 
         $newDress->fill($data);
@@ -82,7 +94,17 @@ class DressController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ($id) {
+
+            $dress = Dress::find($id);
+
+            $data = [
+                "dress" => $dress
+            ];
+
+            return view("dresses.update_form", $data);
+        }
+        abort(404);
     }
 
     /**
@@ -94,7 +116,23 @@ class DressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($id) {
+            $data = $request->all();
+            $request->validate([
+                "taglia" => "required|max:10",
+                "tipo" => "required|max:20",
+                "colore" => "required|max:30",
+                "sesso" => "required|max:10",
+                "costo" => "required|numeric",
+                "marca" => "required|max:50",
+                "immagine" => "required",
+            ]);
+            $dress = Dress::find($id);
+            $dress->update($data);
+
+            return redirect()->route("dresses.index");
+        }
+        abort(404);
     }
 
     /**
@@ -105,6 +143,14 @@ class DressController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($id) {
+
+            $dress = Dress::find($id);
+
+            $dress->delete();
+
+            return redirect()->route("dresses.index");
+        }
+        abort(404);
     }
 }

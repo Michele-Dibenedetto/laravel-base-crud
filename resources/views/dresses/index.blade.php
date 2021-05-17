@@ -16,6 +16,12 @@
                 <p><strong>COSTO:</strong> {{$dress["costo"]}} €</p>
                 <p><strong>SESSO:</strong> {{$dress["sesso"]}}</p>
                 <button><a href="{{route("dresses.show", ["dress" => $dress['id']])}}">Dettaglio</a></button>
+                <button><a href="{{route("dresses.edit", ["dress" => $dress['id']])}}">Modifica</a></button>
+                <form action="{{route("dresses.destroy", ["dress" => $dress['id']])}}" method="post">
+                    @csrf
+                    @method("DELETE")
+                    <button type="submit">Cancella</button>
+                </form>
             </div>
         @endforeach
     </div>

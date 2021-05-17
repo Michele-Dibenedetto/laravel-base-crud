@@ -3,6 +3,14 @@
 @section('title_page', 'form')
 
 @section('content')
+
+    @if ($errors->any()) 
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    @endif
     <form action="{{route('dresses.store')}}" method="post">
         @csrf
         @method('POST')
